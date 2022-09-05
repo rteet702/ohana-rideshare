@@ -1,0 +1,8 @@
+#new_ride {
+    height: 50px;
+    transition: transform 0.2s;
+}
+
+#new_ride:hover {
+    transform: scale(1.1,1.1);
+}

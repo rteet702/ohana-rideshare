@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ohana RideShares | Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+</head>
+<body class="bg-secondary">
+    <div class="container bg-light shadow-lg rounded my-3 p-3">
+        <!-- topbar  -->
+        <div class="row p-3">
+            <!-- welcome section -->
+            <div class="col">
+                <h2 class="fs-3">Welcome, {{ active_user.first_name }}</h2>
+            </div>
+            <!-- request a ride section -->
+            <div class="col">
+                <a href="/rides/create">
+                    <img src="{{ url_for('static', filename='imgs/plus-svgrepo-com.svg') }}" alt="plus symbol" class="mx-auto d-block" id="new_ride">
+                </a>
+            </div>
+            <!-- logout section -->
+            <div class="col">
+                <p class="d-flex align-items-end justify-content-end"><a class="link-warning" href="/logout">Logout</a></p>
+            </div>
+        </div>
+        <!-- main content body -->
+        <div class="row">
+            <!-- pending requests -->
+            <div class="col px-5">
+                <h2 class="text-warning text-center my-3">Rideshare Requests</h2>
+                {% for ride in rides %}
+                {% if ride.driver_id == None %}
+                <div class="row p-3 my-4 shadow rounded">
+                    <div class="col">
+                        <p>Rider:</p>
+                        <p>Destination:</p>
+                        <p>When:</p>
+                    </div>
+                    <div class="col">
+                        <p>{{ ride.request_id.first_name }}</p>
+                        <p>{{ ride.destination }}</p>
+                        <p>{{ ride.rideshare_date }}</p>
+                        {% if ride.request_id.id == active_user.id %}
+                        <p><a class="btn btn-danger" href="/rides/{{ride.id}}/delete">Delete</a></p>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+            <!-- booked rides -->
+            <div class="col px-5">
+                <h2 class="text-warning text-center my-3">Booked Rideshares</h2>
+                <!-- accepted rideshare blocks -->
+                {% for ride in rides %}
+                {% if ride.driver_id != None %}
+                <div class="row p-3 my-4 shadow rounded border border-1 border-secondary">
+                    <p><span class="fw-bold">{{ ride.driver_id.first_name }}</span>
+                        is driving <span class="fw-bold">{{ ride.request_id.first_name }}</span>
+                        to {{ ride.destination }} on {{ ride.rideshare_date }}.</p>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,5 +1,6 @@
 from flask_app.config.mysqlconnection import connectToMySQL
 from flask_app.models.user import User
+from flask import flash
 
 
 class Ride:
@@ -12,6 +13,34 @@ class Ride:
         self.updated_at = data.get('updated_at')
         self.request_id = None
         self.driver_id = None
+
+    @staticmethod
+    def validate_form(form:dict):
+        '''Quick and dirty validation. Returns True if the form is valid, False otherwise.'''
+
+        is_valid = True
+
+        if not form.get('destination') or len(form.get('destination')) < 3:
+            flash('* Please enter a valid destination.')
+            is_valid = False
+        if not form.get('pickup_location') or len(form.get('pickup_location')) < 3:
+            flash('* Please enter a valid pickup location.')
+            is_valid = False
+        if not form.get('rideshare_date'):
+            flash('* Please enter a valid date.')
+            is_valid = False
+        if not form.get('details') or len(form.get('details')) < 10:
+            flash('* Please enter details. Must be at least 10 characters.')
+            is_valid = False
+
+        return is_valid
+
+    @staticmethod
+    def delete_ride(data:dict) -> None:
+        '''Delete a ride from the database.'''
+
+        query = "DELETE FROM rides WHERE id=%(id)s;"
+        connectToMySQL('rideshare').query_db(query, data)
 
     @classmethod
     def get_all_rides(cls) -> list:
@@ -63,3 +92,19 @@ class Ride:
 
             return_list.append(ride)
         return return_list
+
+    @classmethod
+    def create_ride(cls, data:dict) -> int:
+        '''Quick method to take the data from a form and create a new ride. Returns the id of the new row.'''
+
+        query = "INSERT INTO rides (destination, pickup_location, rideshare_date, request_id) VALUES (%(destination)s, %(pickup_location)s, %(rideshare_date)s, %(user_id)s);"
+
+        return connectToMySQL('rideshare').query_db(query, data)
+
+    @classmethod
+    def accept_ride(cls, data:dict) -> None:
+        '''Update the given ride's driver_id to match the accepting user.'''
+
+        query = "UPDATE rides SET driver_id=%(user_id)s WHERE id=%(ride_id)s;"
+
+        connectToMySQL('rideshare').query_db(query, data)

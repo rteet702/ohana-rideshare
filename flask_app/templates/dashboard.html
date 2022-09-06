@@ -46,6 +46,8 @@
                         <p>{{ ride.rideshare_date }}</p>
                         {% if ride.request_id.id == active_user.id %}
                         <p><a class="btn btn-danger" href="/rides/{{ride.id}}/delete">Delete</a></p>
+                        {% else %}
+                        <p><a class="btn btn-primary" href="/rides/{{ride.id}}/accept">I can drive!</a></p>
                         {% endif %}
                     </div>
                 </div>
@@ -58,7 +60,7 @@
                 <!-- accepted rideshare blocks -->
                 {% for ride in rides %}
                 {% if ride.driver_id != None %}
-                <div class="row p-3 my-4 shadow rounded border border-1 border-secondary">
+                <div class="row p-3 my-4 shadow rounded">
                     <p><span class="fw-bold">{{ ride.driver_id.first_name }}</span>
                         is driving <span class="fw-bold">{{ ride.request_id.first_name }}</span>
                         to {{ ride.destination }} on {{ ride.rideshare_date }}.</p>

@@ -1,14 +1,20 @@
 from flask_app.config.mysqlconnection import connectToMySQL
 from flask_app.models.user import User
 from flask import flash
+from datetime import datetime
 
 
 class Ride:
     def __init__(self, data:dict) -> None:
+
+        """
+        This class represents a 'ride' within the rideshare program.. All methods inside this class will pertain to the Ride, as well as any related data.
+        """
+
         self.id = data.get('id')
         self.destination = data.get('destination')
         self.pickup_location = data.get('pickup_location')
-        self.rideshare_date = data.get('rideshare_date')
+        self.rideshare_date = data.get('rideshare_date').strftime('%b %d, %Y')
         self.details = data.get('details')
         self.created_at = data.get('created_at')
         self.updated_at = data.get('updated_at')

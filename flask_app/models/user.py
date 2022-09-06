@@ -13,7 +13,6 @@ class User:
 
     """
     This class represents a typical user. All methods inside this class will pertain to the User, as well as any related data.
-    Tentatively, this class will be set up to handle the storing of 'Recipe' instances.
     """
 
     def __init__(self, data:dict) -> None:

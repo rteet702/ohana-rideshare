@@ -149,7 +149,7 @@ class Ride:
         connectToMySQL('rideshare').query_db(query, data)
 
     @classmethod
-    def get_by_id(cls, data:dict) -> list:
+    def get_by_id(cls, data:dict) -> object:
         '''Get a list of all rides currently created, as well as associating the driver / rider with the ride.'''
 
         query = """SELECT
@@ -186,3 +186,30 @@ class Ride:
         ride.request_id = User.get_by_email(request_data)
 
         return ride
+
+    @classmethod
+    def get_ride_with_messages(cls, data:dict) -> object:
+        '''A convoluted join query that returns the ride with all related messages, ordered.'''
+
+        query ="""SELECT rides.id as ride_id, users.first_name, messages.content FROM messages
+                JOIN rides ON ride_id = rides.id
+                JOIN users ON user_id = users.id
+                WHERE rides.id=%(ride_id)s
+                ORDER BY messages.created_at;"""
+
+        results = connectToMySQL('rideshare').query_db(query, data)
+        ride = Ride.get_by_id(data)
+
+        for message in results:
+            ride.messages.append(message)
+
+        return ride
+
+    @staticmethod
+    def send_message(data:dict) -> int:
+        '''Send a message to the ride group.'''
+
+        query = """INSERT INTO messages (content, ride_id, user_id)
+                    VALUES (%(content)s, %(ride_id)s, %(user_id)s);"""
+
+        return connectToMySQL('rideshare').query_db(query, data)

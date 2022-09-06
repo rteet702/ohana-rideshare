@@ -68,8 +68,11 @@ def f_cancel(ride_id):
 @app.route('/rides/<int:ride_id>/details')
 def r_details(ride_id):
     data = {'ride_id' : ride_id}
-    ride = Ride.get_by_id(data)
-    return render_template('details_ride.html', ride=ride)
+    user_data = {'id': session['user_id']}
+
+    active_user = User.get_by_id(user_data)
+    ride = Ride.get_ride_with_messages(data)
+    return render_template('details_ride.html', active_user=active_user, ride=ride)
 
 
 @app.route('/rides/<int:ride_id>/edit')
@@ -91,4 +94,16 @@ def f_edit():
         return redirect(f'/rides/{ride_id}/edit')
 
     Ride.update_ride(data)
+    return redirect(f'/rides/{ride_id}/details')
+
+
+@app.route('/rides/<int:ride_id>/send', methods=['POST'])
+def f_send(ride_id):
+    data = {
+        'ride_id': ride_id,
+        'user_id': request.form.get('user_id'),
+        'content': request.form.get('content')
+    }
+    Ride.send_message(data)
+    print(ride_id)
     return redirect(f'/rides/{ride_id}/details')

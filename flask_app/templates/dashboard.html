@@ -45,7 +45,7 @@
                         <p>{{ ride.destination }}</p>
                         <p>{{ ride.rideshare_date }}</p>
                         {% if ride.request_id.id == active_user.id %}
-                        <p><a class="btn btn-danger" href="/rides/{{ride.id}}/delete">Delete</a></p>
+                        <p><a class="btn btn-danger" href="/rides/{{ride.id}}/delete">Delete</a><a class="btn btn-success ms-5" href="/rides/{{ride.id}}/edit">Edit</a></p>
                         {% else %}
                         <p><a class="btn btn-primary" href="/rides/{{ride.id}}/accept">I can drive!</a></p>
                         {% endif %}

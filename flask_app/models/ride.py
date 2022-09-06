@@ -22,7 +22,7 @@ class Ride:
         self.driver_id = None
 
     @staticmethod
-    def validate_form(form:dict):
+    def validate_form(form:dict) -> bool:
         '''Quick and dirty validation. Returns True if the form is valid, False otherwise.'''
 
         is_valid = True
@@ -35,6 +35,21 @@ class Ride:
             is_valid = False
         if not form.get('rideshare_date'):
             flash('* Please enter a valid date.')
+            is_valid = False
+        if not form.get('details') or len(form.get('details')) < 10:
+            flash('* Please enter details. Must be at least 10 characters.')
+            is_valid = False
+
+        return is_valid
+
+    @staticmethod
+    def validate_edit(form:dict) -> bool:
+        '''Quick and dirty validation. Returns True if the form is valid, False otherwise.'''
+
+        is_valid = True
+
+        if not form.get('pickup_location') or len(form.get('pickup_location')) < 3:
+            flash('* Please enter a valid pickup location.')
             is_valid = False
         if not form.get('details') or len(form.get('details')) < 10:
             flash('* Please enter details. Must be at least 10 characters.')
@@ -121,6 +136,14 @@ class Ride:
         '''Update the given ride's driver_id to None'''
 
         query = "UPDATE rides SET driver_id=default WHERE id=%(ride_id)s;"
+
+        connectToMySQL('rideshare').query_db(query, data)
+
+    @classmethod
+    def update_ride(cls, data:dict) -> None:
+        '''Update the given ride's pickup location and details.'''
+
+        query = "UPDATE rides SET pickup_location=%(pickup_location)s, details=%(details)s WHERE id=%(ride_id)s;"
 
         connectToMySQL('rideshare').query_db(query, data)
 

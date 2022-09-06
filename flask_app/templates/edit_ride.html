@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ohana RideShares | Request a Ride</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+</head>
+<body class="bg-secondary">
+    <div class="container bg-light shadow-lg rounded my-3 py-3 px-5">
+        <!-- topbar -->
+        <div class="row py-3 mb-3">
+            <!-- header -->
+            <div class="col-10">
+                <h1>Update the Details!</h1>
+            </div>
+            <!-- navs -->
+            <div class="col d-flex align-items-end justify-content-between">
+                <p><a class="link-warning" href="/rides/dashboard">Dashboard</a></p>
+                <p><a class="link-warning" href="/logout">Logout</a></p>
+            </div>
+        </div>
+        <!-- form body -->
+        <form action="/rides/edit" method="post" class="col-7">
+            <!-- hidden input user submission id -->
+            <input type="hidden" name="ride_id" value="{{ ride.id }}">
+            <!-- pickup location -->
+            <div class="row mb-3">
+                <label for="pickup_location" class="col-sm-2 col-form-label">Pick-up Location:</label>
+                <div class="col-10">
+                    <input type="text" class="form-control" name="pickup_location" id="pickup_location" value="{{ ride.pickup_location }}">
+                </div>
+            </div>
+            <!-- details -->
+            <div class="row mb-3">
+                <label for="details" class="col-sm-2 col-form-label">Details:</label>
+                <div class="col-10">
+                    <textarea name="details" id="details" class="form-control" rows="10">{{ ride.details }}</textarea>
+                </div>
+            </div>
+            <div class="button-container d-flex align-items-center justify-content-end">
+                <input type="submit" value="Update" class="btn btn-warning">
+            </div>
+        </form>
+    </div>
+</body>
+</html>

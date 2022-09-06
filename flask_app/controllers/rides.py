@@ -70,3 +70,25 @@ def r_details(ride_id):
     data = {'ride_id' : ride_id}
     ride = Ride.get_by_id(data)
     return render_template('details_ride.html', ride=ride)
+
+
+@app.route('/rides/<int:ride_id>/edit')
+def r_edit(ride_id):
+    data = {'ride_id' : ride_id}
+    ride = Ride.get_by_id(data)
+    return render_template('edit_ride.html', ride=ride)
+
+
+@app.route('/rides/edit', methods=['POST'])
+def f_edit():
+    ride_id = request.form.get('ride_id')
+    data = {
+        'ride_id': ride_id,
+        'pickup_location': request.form.get('pickup_location'),
+        'details': request.form.get('details')
+    }
+    if not Ride.validate_edit(data):
+        return redirect(f'/rides/{ride_id}/edit')
+
+    Ride.update_ride(data)
+    return redirect(f'/rides/{ride_id}/details')

@@ -18,8 +18,8 @@
             </div>
             <!-- request a ride section -->
             <div class="col">
-                <a href="/rides/create">
-                    <img src="{{ url_for('static', filename='imgs/plus-svgrepo-com.svg') }}" alt="plus symbol" class="mx-auto d-block" id="new_ride">
+                <a href="/rides/create" class="d-flex align-items-center justify-content-center link-dark">
+                    REQUEST<img src="{{ url_for('static', filename='imgs/plus-svgrepo-com.svg') }}" alt="plus symbol" class="mx-3" id="new_ride">RIDESHARE
                 </a>
             </div>
             <!-- logout section -->
@@ -31,7 +31,7 @@
         <div class="row">
             <!-- pending requests -->
             <div class="col px-5">
-                <h2 class="text-warning text-center my-3">Rideshare Requests</h2>
+                <h2 class="text-warning text-center my-5 border-bottom border-3 border-warning pb-3">Rideshare Requests</h2>
                 {% for ride in rides %}
                 {% if ride.driver_id == None %}
                 <div class="row p-3 my-4 shadow rounded">
@@ -56,14 +56,19 @@
             </div>
             <!-- booked rides -->
             <div class="col px-5">
-                <h2 class="text-warning text-center my-3">Booked Rideshares</h2>
+                <h2 class="text-warning text-center my-5 border-bottom border-3 border-warning pb-3">Booked Rideshares</h2>
                 <!-- accepted rideshare blocks -->
                 {% for ride in rides %}
                 {% if ride.driver_id != None %}
                 <div class="row p-3 my-4 shadow rounded">
-                    <p><span class="fw-bold">{{ ride.driver_id.first_name }}</span>
-                        is driving <span class="fw-bold">{{ ride.request_id.first_name }}</span>
-                        to {{ ride.destination }} on {{ ride.rideshare_date }}.</p>
+                    <p>
+                        <span class="fw-bold">{{ ride.driver_id.first_name }}</span> is driving <span class="fw-bold">{{ ride.request_id.first_name }}</span> to {{ ride.destination }} on {{ ride.rideshare_date }}.
+                    </p>
+                    {% if ride.driver_id.id == active_user.id %}
+                    <p class="d-flex justify-content-between"><a class="btn btn-success" href="/rides/{{ ride.id }}/details">Details</a><a class="btn btn-danger" href="/rides/{{ ride.id }}/cancel">Cancel</a></p>
+                    {% elif ride.request_id.id == active_user.id %}
+                    <p><a class="btn btn-success" href="/rides/{{ ride.id }}/details">Details</a></p>
+                    {% endif %}
                 </div>
                 {% endif %}
                 {% endfor %}

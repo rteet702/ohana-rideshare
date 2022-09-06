@@ -55,3 +55,18 @@ def f_accept(ride_id):
     Ride.accept_ride(data)
 
     return redirect('/rides/dashboard')
+
+
+@app.route('/rides/<int:ride_id>/cancel')
+def f_cancel(ride_id):
+    data = {'ride_id': ride_id}
+    Ride.cancel_ride(data)
+
+    return redirect('/rides/dashboard')
+
+
+@app.route('/rides/<int:ride_id>/details')
+def r_details(ride_id):
+    data = {'ride_id' : ride_id}
+    ride = Ride.get_by_id(data)
+    return render_template('details_ride.html', ride=ride)

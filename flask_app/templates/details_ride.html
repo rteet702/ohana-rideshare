@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ohana RideShares | Request a Ride</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+</head>
+<body class="bg-secondary">
+    <div class="container bg-light shadow-lg rounded my-3 py-3 px-5">
+        <!-- topbar -->
+        <div class="row py-3 mb-3">
+            <!-- header -->
+            <div class="col-10">
+                <h1>Ready for your trip to {{ ride.destination }}?</h1>
+            </div>
+            <!-- navs -->
+            <div class="col d-flex align-items-end justify-content-between">
+                <p><a class="link-warning" href="/rides/dashboard">Dashboard</a></p>
+                <p><a class="link-warning" href="/logout">Logout</a></p>
+            </div>
+        </div>
+        <!-- Ride details -->
+        <div class="row">
+            <div class="col">
+                <p class="fs-4 mb-5">Who's driving:</p>
+                <p class="fs-4 mb-5">Who's coming along:</p>
+                <p class="fs-4 mb-5">Date:</p>
+                <p class="fs-4 mb-5">Pick-up Location:</p>
+                <p class="fs-4 mb-5">Details:</p>
+                <p><a href="/rides/{{ ride.id }}/edit">Edit</a> | <a href="/rides/{{ ride.id }}/delete">Delete</a></p>
+            </div>
+            <div class="col">
+                <p class="fs-4 mb-5">{{ ride.driver_id.first_name }}</p>
+                <p class="fs-4 mb-5">{{ ride.request_id.first_name }}</p>
+                <p class="fs-4 mb-5">{{ ride.rideshare_date }}</p>
+                <p class="fs-4 mb-5">{{ ride.pickup_location }}</p>
+                <p class="fs-4 mb-5">{{ ride.details }}</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

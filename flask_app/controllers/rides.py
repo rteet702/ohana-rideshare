@@ -14,3 +14,12 @@ def r_dashboard():
     active_user = User.get_by_id(active_data)
     rides = Ride.get_all_rides()
     return render_template('dashboard.html', active_user=active_user, rides=rides)
+
+
+@app.route('/rides/create')
+def r_create():
+    if 'user_id' not in session:
+        flash('* Please login or create an account first.', 'registration')
+        return redirect('/')
+
+    return render_template('create_ride.html')

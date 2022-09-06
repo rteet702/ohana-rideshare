@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ohana RideShares | Request a Ride</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+</head>
+<body class="bg-secondary">
+    <div class="container bg-light shadow-lg rounded my-3 py-3 px-5">
+        <!-- topbar -->
+        <div class="row py-3 mb-3">
+            <!-- header -->
+            <div class="col-10">
+                <h1>Request a ride</h1>
+            </div>
+            <!-- navs -->
+            <div class="col d-flex align-items-end justify-content-between">
+                <p><a class="link-warning" href="/rides/dashboard">Dashboard</a></p>
+                <p><a class="link-warning" href="/logout">Logout</a></p>
+            </div>
+        </div>
+        <!-- form body -->
+        <div class="col-7">
+            <!-- destination -->
+            <div class="row mb-3">
+                <label for="destination" class="col-sm-2 col-form-label">Destination:</label>
+                <div class="col-10">
+                    <input type="text" class="form-control" id="destination">
+                </div>
+            </div>
+            <!-- pickup location -->
+            <div class="row mb-3">
+                <label for="pickup_location" class="col-sm-2 col-form-label">Pick-up Location:</label>
+                <div class="col-10">
+                    <input type="text" class="form-control" id="pickup_location">
+                </div>
+            </div>
+            <!-- date -->
+            <div class="row mb-3">
+                <label for="rideshare_date" class="col-sm-2 col-form-label">Rideshare Date:</label>
+                <div class="col-10">
+                    <input type="date" class="form-control" id="rideshare_date">
+                </div>
+            </div>
+            <!-- details -->
+            <div class="row mb-3">
+                <label for="details" class="col-sm-2 col-form-label">Details:</label>
+                <div class="col-10">
+                    <textarea name="details" id="details" class="form-control" rows="10"></textarea>
+                </div>
+            </div>
+            <div class="button-container d-flex align-items-center justify-content-end">
+                <input type="submit" value="Post" class="btn btn-warning">
+            </div>
+        </div>
+    </div>
+</body>
+</html>

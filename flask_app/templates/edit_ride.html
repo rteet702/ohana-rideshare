@@ -22,6 +22,10 @@
                 <p><a class="link-warning" href="/logout">Logout</a></p>
             </div>
         </div>
+        <!-- warning messages -->
+        {% for message in get_flashed_messages() %}
+        <p class="text-danger">{{ message }}</p>
+        {% endfor %}
         <!-- form body -->
         <form action="/rides/edit" method="post" class="col-7">
             <!-- hidden input user submission id -->

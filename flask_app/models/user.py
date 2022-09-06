@@ -74,6 +74,8 @@ class User:
             flash('* Invalid email / password', 'login')
             is_valid = False
         return is_valid
+
+
     @classmethod
     def get_by_email(cls, data:dict):
         """Check if there is an user associated with the provided email. If a user is found, returns an object constructed from the query."""

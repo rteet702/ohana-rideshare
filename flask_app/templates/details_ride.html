@@ -11,7 +11,7 @@
 <body class="bg-secondary">
     <div class="container bg-light shadow-lg rounded my-3 py-3 px-5">
         <!-- topbar -->
-        <div class="row py-3 mb-3">
+        <div class="row py-3 mb-5 border-bottom border-3 border-dark">
             <!-- header -->
             <div class="col-10">
                 <h1>Ready for your trip to {{ ride.destination }}?</h1>
@@ -23,7 +23,7 @@
             </div>
         </div>
         <!-- Ride details -->
-        <div class="row">
+        <div class="row border-bottom border-3 border-dark pb-5">
             <div class="col">
                 <p class="fs-4 mb-5">Who's driving:</p>
                 <p class="fs-4 mb-5">Who's coming along:</p>
@@ -40,6 +40,7 @@
                 <p class="fs-4 mb-5">{{ ride.details }}</p>
             </div>
         </div>
+        <!-- messages -->
     </div>
 </body>
 </html>

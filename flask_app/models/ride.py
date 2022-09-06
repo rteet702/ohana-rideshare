@@ -20,6 +20,7 @@ class Ride:
         self.updated_at = data.get('updated_at')
         self.request_id = None
         self.driver_id = None
+        self.messages = []
 
     @staticmethod
     def validate_form(form:dict) -> bool:
